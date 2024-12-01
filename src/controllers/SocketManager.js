@@ -5,12 +5,12 @@ let messages = {}
 let timeOnline = {}
 
 export const initializeSocket = (server) => {
-    const io = new Server(server,{
-        cors:{
-            origin:"*",
-            methods:["GET","POST"],
-            allowedHeaders:["*"],
-            credentials:true
+    const io = new Server(server, {
+        cors: {
+            origin: "*",
+            methods: ["GET", "POST"],
+            allowedHeaders: ["*"],
+            credentials: true
         }
     });
 
@@ -24,13 +24,13 @@ export const initializeSocket = (server) => {
             connections[path].push(socket.id)
             timeOnline[socket.id] = new Date;
 
-            for (let a = 0; i <= connections[path].length; i++) {
-                io.to(connections[path[a]]).emit("user-joined", socket.id, connections[path])
+            for (let i = 0; i <= connections[path].length; i++) {
+                io.to(connections[path[i]]).emit("user-joined", socket.id, connections[path])
             }
             if (messages[path] !== undefined) {
-                for (let a = 0; i <= connections[path].length; ++a) {
-                    io.to(socket.id).emit("chat-message", messages[path][a]['data'],
-                        messages[path][a]['sender'], messages[path][a]['socekt-id-sender']
+                for (let i = 0; i <= connections[path].length; ++i) {
+                    io.to(socket.id).emit("chat-message", messages[path][i]['data'],
+                        messages[path][i]['sender'], messages[path][i]['socekt-id-sender']
                     )
                 }
             }
@@ -65,12 +65,12 @@ export const initializeSocket = (server) => {
             let diffTime = Math.abs(timeOnline[socket.id] - new Date())
             let key
             for (const [k, v] of JSON.parse(JSON.stringify(Object.entries(connections)))) {
-                for (let a = 0; a < v.lenght; ++a) {
-                    if (v[a] == socket.id) {
+                for (let i = 0; i < v.lenght; ++i) {
+                    if (v[i] == socket.id) {
                         key = k
 
-                        for (let a = 0; a < connections[key].lenght; ++a) {
-                            io.to(connections[key][a].emit("user-left", socket.id))
+                        for (let i = 0; i < connections[key].lenght; ++i) {
+                            io.to(connections[key][i].emit("user-left", socket.id))
                         }
 
                         let index = connections[key].indexOf(socket.id)
@@ -85,7 +85,6 @@ export const initializeSocket = (server) => {
             }
         })
     })
-
 
     return io;
 }
