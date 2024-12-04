@@ -19,7 +19,7 @@ app.use(express.urlencoded({limit:"50kb",extended:true}))
 app.use("/api/v1/users",userRoutes);
 
 const start = async () => {
-    const dbConnection = await mongoose.connect("mongodb+srv://ahmedjoseph0711:ob6yAO718tmD9pcG@cluster0.kxazt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    const dbConnection = await mongoose.connect("mongodb+srv://ahmedjoseph0711:ob6yAO718tmD9pcG@cluster0.kxazt.mongodb.net/meetora?retryWrites=true&w=majority&appName=Cluster0")
     console.log(`Connected to host ${dbConnection.connection.host}`)
     server.listen(app.get("port"), () => {
         console.log("App running on 8000")
